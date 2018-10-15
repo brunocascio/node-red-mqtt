@@ -16,7 +16,7 @@
 		"broker": "2be2d1a.5ca812e",
 		"x": 280,
 		"y": 200,
-		"wires": [ [ "cf302632.ab79f8", "58da6d6c.c9bfe4" ] ]
+		"wires": [ [ "cf302632.ab79f8" ] ]
 	},
 	{
 		"id": "cf302632.ab79f8",
@@ -41,27 +41,13 @@
 		"wires": []
 	},
 	{
-		"id": "58da6d6c.c9bfe4",
-		"type": "debug",
-		"z": "7d86ecf2.760444",
-		"name": "logg",
-		"active": true,
-		"tosidebar": true,
-		"console": true,
-		"tostatus": false,
-		"complete": "payload",
-		"x": 520,
-		"y": 80,
-		"wires": []
-	},
-	{
 		"id": "2be2d1a.5ca812e",
 		"type": "mqtt-broker",
 		"z": "",
 		"name": "BROKER",
 		"broker": "192.168.50.6",
 		"port": "1883",
-		"clientid": "BROKER",
+		"clientid": "LED",
 		"usetls": false,
 		"compatmode": true,
 		"keepalive": "60",
