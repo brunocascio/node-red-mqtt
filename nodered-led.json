@@ -1,0 +1,36 @@
+[
+	{
+		"id": "f905762b.e631c8",
+		"type": "mqtt in",
+		"z": "7d86ecf2.760444",
+		"name": "LED",
+		"topic": "EstadoLed",
+		"qos": "0",
+		"broker": "2be2d1a.5ca812e",
+		"x": 280,
+		"y": 200,
+		"wires": [ [ "cf302632.ab79f8", "58da6d6c.c9bfe4" ] ]
+	},
+	{
+		"id": "2be2d1a.5ca812e",
+		"type": "mqtt-broker",
+		"z": "",
+		"name": "BROKER",
+		"broker": "192.168.50.6",
+		"port": "1883",
+		"clientid": "BROKER",
+		"usetls": false,
+		"compatmode": true,
+		"keepalive": "60",
+		"cleansession": true,
+		"birthTopic": "",
+		"birthQos": "0",
+		"birthPayload": "",
+		"closeTopic": "",
+		"closeQos": "0",
+		"closePayload": "",
+		"willTopic": "",
+		"willQos": "0",
+		"willPayload": ""
+	}
+]
