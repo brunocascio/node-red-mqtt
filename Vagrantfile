@@ -29,7 +29,9 @@ Vagrant.configure("2") do |config|
       sudo bash nodesource_setup.sh
       sudo apt-get install -y python-simplejson nodejs build-essential
       sudo npm install -g --unsafe-perm node-red
-      npm install -g pm2 node-red node-red-dashboard
+      npm install -g pm2 node-red-dashboard
+      sudo sed -i '122,129 s/\/\// /' /root/.node-red/settings.js
+      sudo sed -i '135,136 s/\/\// /' /root/.node-red/settings.js
       pm2 start /usr/bin/node-red
       pm2 save
       pm2 startup systemd
@@ -55,7 +57,9 @@ Vagrant.configure("2") do |config|
       sudo bash nodesource_setup.sh
       sudo apt-get install -y python-simplejson nodejs build-essential
       sudo npm install -g --unsafe-perm node-red
-      npm install -g pm2 node-red node-red-dashboard
+      npm install -g pm2 node-red-dashboard
+      sudo sed -i '122,129 s/\/\// /' /root/.node-red/settings.js
+      sudo sed -i '135,136 s/\/\// /' /root/.node-red/settings.js
       pm2 start /usr/bin/node-red
       pm2 save
       pm2 startup systemd
