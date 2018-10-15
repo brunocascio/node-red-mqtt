@@ -1,5 +1,12 @@
 [
 	{
+		"id": "7d86ecf2.760444",
+		"type": "tab",
+		"label": "led",
+		"disabled": false,
+		"info": ""
+	},
+	{
 		"id": "f905762b.e631c8",
 		"type": "mqtt in",
 		"z": "7d86ecf2.760444",
@@ -10,6 +17,42 @@
 		"x": 280,
 		"y": 200,
 		"wires": [ [ "cf302632.ab79f8", "58da6d6c.c9bfe4" ] ]
+	},
+	{
+		"id": "cf302632.ab79f8",
+		"type": "ui_gauge",
+		"z": "7d86ecf2.760444",
+		"name": "",
+		"group": "f9f5d84.fac1728",
+		"order": 0,
+		"width": 0,
+		"height": 0,
+		"gtype": "gage",
+		"title": "gauge",
+		"label": "units",
+		"format": "{{value}}",
+		"min": 0,
+		"max": "1",
+		"colors": [ "#00b500", "#e6e600", "#ca3838" ],
+		"seg1": "",
+		"seg2": "",
+		"x": 520,
+		"y": 200,
+		"wires": []
+	},
+	{
+		"id": "58da6d6c.c9bfe4",
+		"type": "debug",
+		"z": "7d86ecf2.760444",
+		"name": "logg",
+		"active": true,
+		"tosidebar": true,
+		"console": true,
+		"tostatus": false,
+		"complete": "payload",
+		"x": 520,
+		"y": 80,
+		"wires": []
 	},
 	{
 		"id": "2be2d1a.5ca812e",
@@ -32,5 +75,22 @@
 		"willTopic": "",
 		"willQos": "0",
 		"willPayload": ""
+	},
+	{
+		"id": "f9f5d84.fac1728",
+		"type": "ui_group",
+		"z": "",
+		"name": "Default",
+		"tab": "1498f940.fdf707",
+		"disp": true,
+		"width": "6",
+		"collapse": false
+	},
+	{
+		"id": "1498f940.fdf707",
+		"type": "ui_tab",
+		"z": "",
+		"name": "Home",
+		"icon": "dashboard"
 	}
 ]
