@@ -12,7 +12,7 @@
 		"z": "7d86ecf2.760444",
 		"name": "LED",
 		"topic": "EstadoLed",
-		"qos": "0",
+		"qos": "2",
 		"broker": "2be2d1a.5ca812e",
 		"x": 280,
 		"y": 200,
