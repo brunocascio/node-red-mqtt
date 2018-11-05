@@ -38,33 +38,33 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-  config.vm.define "SUB", autostart: true do |config|
-    config.vm.box = "ubuntu/xenial64"
-    config.vm.box_check_update = false
-
-    config.vm.network "forwarded_port", guest: 1880, host: 1882
-    config.vm.network "forwarded_port", guest: 22, host: 222
-    config.vm.network "private_network", ip: "192.168.50.5"
-
-    config.vm.provider "virtualbox" do |vb|
-      vb.name = "SUB"
-      vb.memory = 512
-    end
-
-    config.vm.provision "shell", privileged: true, :inline => <<-SHELL
-      sudo apt-get update
-      curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
-      sudo bash nodesource_setup.sh
-      sudo apt-get install -y python-simplejson nodejs build-essential
-      sudo npm install -g --unsafe-perm node-red
-      npm install -g pm2 node-red-dashboard
-      sudo sed -i '122,129 s/\/\// /' /root/.node-red/settings.js
-      sudo sed -i '135,136 s/\/\// /' /root/.node-red/settings.js
-      pm2 start /usr/bin/node-red
-      pm2 save
-      pm2 startup systemd
-    SHELL
-  end
+#  config.vm.define "SUB", autostart: true do |config|
+#    config.vm.box = "ubuntu/xenial64"
+#    config.vm.box_check_update = false
+#
+#    config.vm.network "forwarded_port", guest: 1880, host: 1882
+#    config.vm.network "forwarded_port", guest: 22, host: 222
+#    config.vm.network "private_network", ip: "192.168.50.5"
+#
+#    config.vm.provider "virtualbox" do |vb|
+#      vb.name = "SUB"
+#      vb.memory = 512
+#    end
+#
+#    config.vm.provision "shell", privileged: true, :inline => <<-SHELL
+#      sudo apt-get update
+#      curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+#      sudo bash nodesource_setup.sh
+#      sudo apt-get install -y python-simplejson nodejs build-essential
+#      sudo npm install -g --unsafe-perm node-red
+#      npm install -g pm2 node-red-dashboard
+#      sudo sed -i '122,129 s/\/\// /' /root/.node-red/settings.js
+#      sudo sed -i '135,136 s/\/\// /' /root/.node-red/settings.js
+#      pm2 start /usr/bin/node-red
+#      pm2 save
+#      pm2 startup systemd
+#    SHELL
+#  end
 
   config.vm.define "BROKER", autostart: true do |config|
     config.vm.box = "ubuntu/xenial64"
