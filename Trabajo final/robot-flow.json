@@ -1,0 +1,1 @@
+[{"id":"d1d1c420.c59fc8","type":"function","z":"721c6346.26053c","name":"obstacle","func":"\nreturn {\n    topic: 'Speed',\n    payload: msg.payload < 50 && flow.get('direction') == 1 ? 0 : flow.get('speed')\n}","outputs":1,"noerr":0,"x":310,"y":80,"wires":[["db11c778.9fce38"]]}]
