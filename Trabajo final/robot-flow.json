@@ -1,1 +1,635 @@
-[{"id":"d1d1c420.c59fc8","type":"function","z":"721c6346.26053c","name":"obstacle","func":"\nreturn {\n    topic: 'Speed',\n    payload: msg.payload < 50 && flow.get('direction') == 1 ? 0 : flow.get('speed')\n}","outputs":1,"noerr":0,"x":310,"y":80,"wires":[["db11c778.9fce38"]]}]
+[
+    {
+        "id": "7bb4cdbd.de0354",
+        "type": "subflow",
+        "name": "Motor Controller",
+        "info": "Expects different messages\nAn \"On\" message and a \"Direction\" message",
+        "in": [
+            {
+                "x": 25,
+                "y": 219,
+                "wires": [
+                    {
+                        "id": "3120ae19.f8ccc2"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1180,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "a317c87d.335c98",
+                        "port": 0
+                    },
+                    {
+                        "id": "6b00a0a5.f6f68",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1180,
+                "y": 320,
+                "wires": [
+                    {
+                        "id": "a317c87d.335c98",
+                        "port": 0
+                    },
+                    {
+                        "id": "b950f742.310f48",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 660,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "3120ae19.f8ccc2",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1180,
+                "y": 420,
+                "wires": [
+                    {
+                        "id": "1cf67921.c9bda7",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1160,
+                "y": 500,
+                "wires": [
+                    {
+                        "id": "ef79da9a.9c4ee8",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "3120ae19.f8ccc2",
+        "type": "switch",
+        "z": "7bb4cdbd.de0354",
+        "name": "Split Messages",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Speed",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "On",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Direction",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 165,
+        "y": 228,
+        "wires": [
+            [],
+            [
+                "a317c87d.335c98",
+                "cc638d1a.06638"
+            ],
+            [
+                "53c209f3.97b5a8"
+            ]
+        ]
+    },
+    {
+        "id": "a317c87d.335c98",
+        "type": "switch",
+        "z": "7bb4cdbd.de0354",
+        "name": "Off",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 494,
+        "y": 199,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cc638d1a.06638",
+        "type": "switch",
+        "z": "7bb4cdbd.de0354",
+        "name": "On",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 493,
+        "y": 263,
+        "wires": [
+            [
+                "6b00a0a5.f6f68",
+                "1cf67921.c9bda7"
+            ]
+        ]
+    },
+    {
+        "id": "f47dd1d6.aa38c",
+        "type": "change",
+        "z": "7bb4cdbd.de0354",
+        "name": "Forward",
+        "rules": [
+            {
+                "t": "set",
+                "p": "direction",
+                "pt": "flow",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 427,
+        "y": 358,
+        "wires": [
+            [
+                "6b00a0a5.f6f68"
+            ]
+        ]
+    },
+    {
+        "id": "5212d1d0.fce28",
+        "type": "change",
+        "z": "7bb4cdbd.de0354",
+        "name": "Backward",
+        "rules": [
+            {
+                "t": "set",
+                "p": "direction",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "6b00a0a5.f6f68"
+            ]
+        ]
+    },
+    {
+        "id": "6b00a0a5.f6f68",
+        "type": "function",
+        "z": "7bb4cdbd.de0354",
+        "name": "Get Direction",
+        "func": "var direction = flow.get('direction')||0;\nmsg.payload = direction;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 280,
+        "wires": [
+            [
+                "b950f742.310f48"
+            ]
+        ]
+    },
+    {
+        "id": "b950f742.310f48",
+        "type": "function",
+        "z": "7bb4cdbd.de0354",
+        "name": "Invert",
+        "func": "if (msg.payload == 1) {\n    msg.payload = 0;\n}\nelse {\n    msg.payload = 1;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "53c209f3.97b5a8",
+        "type": "switch",
+        "z": "7bb4cdbd.de0354",
+        "name": "Direction",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 253,
+        "y": 398,
+        "wires": [
+            [
+                "f47dd1d6.aa38c"
+            ],
+            [
+                "5212d1d0.fce28"
+            ],
+            [
+                "b216ff7d.12a58"
+            ],
+            [
+                "febf7e81.e4bcf"
+            ]
+        ]
+    },
+    {
+        "id": "1cf67921.c9bda7",
+        "type": "function",
+        "z": "7bb4cdbd.de0354",
+        "name": "Get Direction",
+        "func": "var direction = flow.get('direction');\nif (direction == 2) {\n    msg.payload = 0; \n}\nif (direction == 3) {\n    msg.payload = 1; \n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "ef79da9a.9c4ee8"
+            ]
+        ]
+    },
+    {
+        "id": "b216ff7d.12a58",
+        "type": "change",
+        "z": "7bb4cdbd.de0354",
+        "name": "Left",
+        "rules": [
+            {
+                "t": "set",
+                "p": "direction",
+                "pt": "flow",
+                "to": "2",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 480,
+        "wires": [
+            [
+                "1cf67921.c9bda7"
+            ]
+        ]
+    },
+    {
+        "id": "febf7e81.e4bcf",
+        "type": "change",
+        "z": "7bb4cdbd.de0354",
+        "name": "Right",
+        "rules": [
+            {
+                "t": "set",
+                "p": "direction",
+                "pt": "flow",
+                "to": "3",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 540,
+        "wires": [
+            [
+                "1cf67921.c9bda7"
+            ]
+        ]
+    },
+    {
+        "id": "ef79da9a.9c4ee8",
+        "type": "function",
+        "z": "7bb4cdbd.de0354",
+        "name": "Invert",
+        "func": "if (msg.payload == 1) {\n    msg.payload = 0;\n}\nelse {\n    msg.payload = 1;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 950,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "721c6346.26053c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "68ba8dbb.3cf2a4",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Right Motor Speed (PWM)",
+        "pin": "31",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "x": 600,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "faef8b8b.6add38",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Right Motor Pin 1",
+        "pin": "32",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 770,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "920121f8.82b5",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Right Motor Pin 2",
+        "pin": "33",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 770,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "db11c778.9fce38",
+        "type": "subflow:7bb4cdbd.de0354",
+        "z": "721c6346.26053c",
+        "name": "",
+        "x": 382,
+        "y": 319.5,
+        "wires": [
+            [
+                "1b54cfa5.fcb61",
+                "faef8b8b.6add38"
+            ],
+            [
+                "920121f8.82b5",
+                "733002e.d4ba4fc"
+            ],
+            [
+                "68ba8dbb.3cf2a4",
+                "c777f6fc.4c3e18"
+            ],
+            [
+                "1b54cfa5.fcb61",
+                "920121f8.82b5"
+            ],
+            [
+                "faef8b8b.6add38",
+                "733002e.d4ba4fc"
+            ]
+        ]
+    },
+    {
+        "id": "c777f6fc.4c3e18",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Left Motor Speed (PWM)",
+        "pin": "37",
+        "set": "",
+        "level": "0",
+        "freq": "",
+        "out": "pwm",
+        "x": 590,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "1b54cfa5.fcb61",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Left Motor Pin 1",
+        "pin": "38",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 740,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "733002e.d4ba4fc",
+        "type": "rpi-gpio out",
+        "z": "721c6346.26053c",
+        "name": "Left Motor Pin 2",
+        "pin": "40",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 740,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8a3caac7.1bae68",
+        "type": "mqtt in",
+        "z": "721c6346.26053c",
+        "name": "",
+        "topic": "Speed",
+        "qos": "2",
+        "broker": "59d8f102.76472",
+        "x": 90,
+        "y": 380,
+        "wires": [
+            [
+                "db11c778.9fce38",
+                "327cc165.b3430e"
+            ]
+        ]
+    },
+    {
+        "id": "89168415.298bb8",
+        "type": "mqtt in",
+        "z": "721c6346.26053c",
+        "name": "",
+        "topic": "Direction",
+        "qos": "2",
+        "broker": "59d8f102.76472",
+        "x": 100,
+        "y": 320,
+        "wires": [
+            [
+                "db11c778.9fce38",
+                "33eda9d8.f60f26"
+            ]
+        ]
+    },
+    {
+        "id": "5d9d3345.2fe6dc",
+        "type": "mqtt in",
+        "z": "721c6346.26053c",
+        "name": "",
+        "topic": "On",
+        "qos": "2",
+        "broker": "59d8f102.76472",
+        "x": 90,
+        "y": 260,
+        "wires": [
+            [
+                "db11c778.9fce38"
+            ]
+        ]
+    },
+    {
+        "id": "bf729143.6800d",
+        "type": "rpi-srf",
+        "z": "721c6346.26053c",
+        "name": "",
+        "topic": "SRV",
+        "pulse": "0.1",
+        "pins": "15,13",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "d1d1c420.c59fc8"
+            ]
+        ]
+    },
+    {
+        "id": "d1d1c420.c59fc8",
+        "type": "function",
+        "z": "721c6346.26053c",
+        "name": "obstacle",
+        "func": "\nreturn {\n    topic: 'Speed',\n    payload: msg.payload < 50 && flow.get('direction') == 1 ? 0 : flow.get('speed')\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [
+                "db11c778.9fce38"
+            ]
+        ]
+    },
+    {
+        "id": "327cc165.b3430e",
+        "type": "function",
+        "z": "721c6346.26053c",
+        "name": "save-speed",
+        "func": "flow.set('speed', msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33eda9d8.f60f26",
+        "type": "function",
+        "z": "721c6346.26053c",
+        "name": "save-direction",
+        "func": "flow.set('direction', msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59d8f102.76472",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "BROKER",
+        "broker": "10.10.10.112",
+        "port": "1883",
+        "clientid": "subscriber",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
